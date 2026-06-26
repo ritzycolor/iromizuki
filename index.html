@@ -607,10 +607,12 @@ function buildDiagram(planets,res,unmei){
   s+=corner(0.67,1.46,0.67,2.30,"男性色数",res.male);
   s+=corner(6.76,1.46,6.76,2.30,"女性色数",res.female);
   s+=corner(3.77,8.78,3.77,9.62,"統合色数",res.integ);
-  // 運命数（数字）
+  // 運命数（数字）＋還元値に対応する色を塗る
+  const unCol=COLOR_ORDER[(res.D3-1)%12];
+  const unHex=COLORDATA[unCol].hex, unTc=txtColor(unHex);
   s+=`<text x="${X(6.48)}" y="${X(8.78).toFixed(1)}" text-anchor="middle" font-size="13" fill="#8a7f76">運命数</text>`;
-  s+=`<circle cx="${X(6.48)}" cy="${X(9.62)}" r="${R}" fill="#fbf4e3" stroke="#dcd0bb"/>`;
-  s+=`<text x="${X(6.48)}" y="${(X(9.62)+9).toFixed(1)}" text-anchor="middle" font-size="26" font-weight="700" fill="#8a6d3f">${unmei}</text>`;
+  s+=`<circle cx="${X(6.48)}" cy="${X(9.62)}" r="${R}" fill="${unHex}" stroke="rgba(0,0,0,.15)"/>`;
+  s+=circleText(X(6.48),X(9.62),[{t:unmei,f:24,col:unTc,b:1},{t:unCol,f:9,col:unTc}]);
   s+=`</svg>`;
   return s;
 }
